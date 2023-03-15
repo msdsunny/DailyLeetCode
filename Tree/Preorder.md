@@ -14,3 +14,97 @@ The algorithm approach can be stated as:
 - After this, we recursively visit its left child.
 - Then we recursively visit the right child.
 - If we encounter a node pointing to NULL, we simply return to its parent.
+
+**Code**:
+```java
+static void preOrderTrav(Node curr, ArrayList < Integer > preOrder) {
+        if (curr == null)
+            return;
+
+        preOrder.add(curr.data);
+        preOrderTrav(curr.left, preOrder);
+        preOrderTrav(curr.right, preOrder);
+    }
+```
+
+The preOrder Traversal is : 1 2 4 5 8 3 6 7 9 10 
+
+**Time Complexity: O(N)** 
+
+Reason: We are traversing N nodes and every node is visited exactly once.  
+
+**Space Complexity: O(N)**
+
+Reason: Space is needed for the recursion stack. In the worst case (skewed tree), space complexity can be O(N).  
+
+![image](https://user-images.githubusercontent.com/39462578/225217542-a2f5286f-fca1-474c-905b-4dff93d17f2b.png)
+![image](https://user-images.githubusercontent.com/39462578/225217612-b8ed995f-1a47-4437-b8d1-08667fefbbe9.png)
+
+---
+
+## Approach 2: Iterative Solution
+```java
+static ArrayList < Integer > preOrderTrav(Node curr) {
+        ArrayList < Integer > preOrder = new ArrayList < Integer > ();
+        if (curr == null)
+            return preOrder;
+
+        Stack < Node > s = new Stack < > ();
+        s.push(curr);
+
+        while (!s.isEmpty()) {
+            Node topNode = s.peek();
+            preOrder.add(topNode.data);
+            s.pop();
+            if (topNode.right != null)
+                s.push(topNode.right);
+            if (topNode.left != null)
+                s.push(topNode.left);
+        }
+        return preOrder;
+
+    }
+```
+
+Output:
+
+The preOrder Traversal is : 1 2 4 5 8 3 6 7 9 10
+
+Time Complexity: O(N).
+
+Reason: We are traversing N nodes and every node is visited exactly once.
+
+Space Complexity: O(N)
+
+Reason: In the worst case, (a tree with every node having a single right child and left-subtree, follow the video attached below to see the illustration), the space complexity can be considered as O(N).
+
+#### Main Code
+```java
+Node root = new Node(1);
+        root.left = new Node(2);
+        root.right = new Node(3);
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+        root.left.right.left = new Node(8);
+        root.right.left = new Node(6);
+        root.right.right = new Node(7);
+        root.right.right.left = new Node(9);
+        root.right.right.right = new Node(10);
+
+        ArrayList < Integer > preOrder = new ArrayList < > ();
+        preOrderTrav(root, preOrder);
+
+        System.out.print("The preOrder Traversal is : ");
+        for (int i = 0; i < preOrder.size(); i++) {
+            System.out.print(preOrder.get(i) + " ");
+        }
+```
+
+
+
+
+
+
+
+
+
